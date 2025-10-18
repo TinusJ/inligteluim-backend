@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: "In Ligte Luim"
+  datasource:
+    url: jdbc:postgresql://localhost:5432/inligteluim
+    username: postgres
+    password: "@Tinus"
+  jpa:
+    hibernate:
+      ddl-auto: create-drop # use 'update' for production
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
