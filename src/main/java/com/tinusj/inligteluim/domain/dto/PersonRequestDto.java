@@ -49,6 +49,9 @@ public record PersonRequestDto(
         Set<Long> parentIds,
         
         @Schema(description = "Set of child IDs representing the person's children")
-        Set<Long> childIds
+        Set<Long> childIds,
+        
+        @Schema(description = "ID of the person's spouse")
+        Long spouseId
 ) {
 }
