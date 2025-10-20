@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -113,6 +114,9 @@ public class PersonServiceImpl implements PersonService {
     }
     
     private PersonResponseDto mapToResponseDto(Person person) {
+        // Initialize lazy collections within transaction
+        List<String> images = person.getImages() != null ? new ArrayList<>(person.getImages()) : new ArrayList<>();
+        
         Set<Long> parentIds = person.getParents() != null 
                 ? person.getParents().stream().map(Person::getId).collect(Collectors.toSet())
                 : new HashSet<>();
@@ -129,7 +133,7 @@ public class PersonServiceImpl implements PersonService {
                 person.getMiddleName(),
                 person.getGender(),
                 person.getProfileImage(),
-                person.getImages(),
+                images,
                 person.getBirthDate(),
                 person.getDateOfDeath(),
                 parentIds,
