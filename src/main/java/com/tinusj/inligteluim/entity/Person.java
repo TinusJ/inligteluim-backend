@@ -39,7 +39,7 @@ public class Person {
     @Lob
     private String profileImage;
     
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "person_images", joinColumns = @JoinColumn(name = "person_id"))
     @Column(name = "image_url")
     @Builder.Default
