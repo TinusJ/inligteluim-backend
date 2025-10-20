@@ -2,12 +2,17 @@ spring:
   application:
     name: "In Ligte Luim"
   datasource:
-    url: jdbc:postgresql://localhost:5432/inligteluim
-    username: postgres
-    password: "@Tinus"
+    url: jdbc:h2:mem:inligteluim
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
   jpa:
     hibernate:
-      ddl-auto: create-drop # use 'update' for production
+      ddl-auto: create-drop
     open-in-view: false
     properties:
       hibernate:
@@ -18,3 +23,9 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
+
+# PostgreSQL configuration (commented out for initial setup)
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/inligteluim
+#    username: postgres
+#    password: "@Tinus"
