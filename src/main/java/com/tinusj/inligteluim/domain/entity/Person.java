@@ -1,5 +1,7 @@
 package com.tinusj.inligteluim.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.tinusj.inligteluim.domain.enums.Gender;
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,13 +12,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Entity
-@Table(name = "persons")
-@Getter
-@Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
+@Getter
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@NoArgsConstructor
+@Setter
+@Table(name = "persons")
 public class Person {
 
     @Id
@@ -63,4 +66,8 @@ public class Person {
     @ManyToMany(mappedBy = "parents")
     @Builder.Default
     private Set<Person> children = new HashSet<>();
+
+    @JoinColumn(name = "spouse_id")
+    @OneToOne
+    private Person spouse;
 }

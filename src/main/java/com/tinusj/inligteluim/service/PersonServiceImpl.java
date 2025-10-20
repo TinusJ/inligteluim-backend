@@ -37,7 +37,15 @@ public class PersonServiceImpl implements PersonService {
             person.setChildren(children);
         }
         
+        // Save the person first to generate an ID
         Person savedPerson = personRepository.save(person);
+        
+        // Set spouse if provided
+        if (requestDto.spouseId() != null) {
+            setSpouse(savedPerson, requestDto.spouseId());
+            savedPerson = personRepository.save(savedPerson);
+        }
+        
         return mapToResponseDto(savedPerson);
     }
     
@@ -64,15 +72,7 @@ public class PersonServiceImpl implements PersonService {
                 .orElseThrow(() -> new RuntimeException("Person not found with id: " + id));
         
         // Update basic fields
-        person.setFirstName(requestDto.firstName());
-        person.setLastName(requestDto.lastName());
-        person.setMaidenName(requestDto.maidenName());
-        person.setMiddleName(requestDto.middleName());
-        person.setGender(requestDto.gender());
-        person.setProfileImage(requestDto.profileImage());
-        person.setImages(requestDto.images());
-        person.setBirthDate(requestDto.birthDate());
-        person.setDateOfDeath(requestDto.dateOfDeath());
+        updateBasicFields(person, requestDto);
         
         // Update parents if provided
         if (requestDto.parentIds() != null) {
@@ -86,6 +86,11 @@ public class PersonServiceImpl implements PersonService {
             person.setChildren(children);
         }
         
+        // Update spouse if provided
+        if (requestDto.spouseId() != null) {
+            setSpouse(person, requestDto.spouseId());
+        }
+        
         Person updatedPerson = personRepository.save(person);
         return mapToResponseDto(updatedPerson);
     }
@@ -97,6 +102,46 @@ public class PersonServiceImpl implements PersonService {
             throw new RuntimeException("Person not found with id: " + id);
         }
         personRepository.deleteById(id);
+    }
+    
+    private void updateBasicFields(Person person, PersonRequestDto requestDto) {
+        person.setFirstName(requestDto.firstName());
+        person.setLastName(requestDto.lastName());
+        person.setMaidenName(requestDto.maidenName());
+        person.setMiddleName(requestDto.middleName());
+        person.setGender(requestDto.gender());
+        person.setProfileImage(requestDto.profileImage());
+        person.setImages(requestDto.images());
+        person.setBirthDate(requestDto.birthDate());
+        person.setDateOfDeath(requestDto.dateOfDeath());
+    }
+    
+    private void setSpouse(Person person, Long spouseId) {
+        // Validation: prevent self-spouse assignment
+        if (person.getId() != null && person.getId().equals(spouseId)) {
+            throw new IllegalArgumentException("A person cannot be their own spouse");
+        }
+        
+        Person spouse = personRepository.findById(spouseId)
+                .orElseThrow(() -> new RuntimeException("Spouse not found with id: " + spouseId));
+        
+        // Clear existing spouse relationships
+        if (person.getSpouse() != null) {
+            Person oldSpouse = person.getSpouse();
+            oldSpouse.setSpouse(null);
+            personRepository.save(oldSpouse);
+        }
+        
+        if (spouse.getSpouse() != null && !spouse.getSpouse().equals(person)) {
+            Person oldSpouse = spouse.getSpouse();
+            oldSpouse.setSpouse(null);
+            personRepository.save(oldSpouse);
+        }
+        
+        // Set bidirectional relationship
+        person.setSpouse(spouse);
+        spouse.setSpouse(person);
+        personRepository.save(spouse);
     }
     
     private Person mapToEntity(PersonRequestDto dto) {
@@ -125,6 +170,8 @@ public class PersonServiceImpl implements PersonService {
                 ? person.getChildren().stream().map(Person::getId).collect(Collectors.toSet())
                 : new HashSet<>();
         
+        Long spouseId = person.getSpouse() != null ? person.getSpouse().getId() : null;
+        
         return new PersonResponseDto(
                 person.getId(),
                 person.getFirstName(),
@@ -137,7 +184,8 @@ public class PersonServiceImpl implements PersonService {
                 person.getBirthDate(),
                 person.getDateOfDeath(),
                 parentIds,
-                childIds
+                childIds,
+                spouseId
         );
     }
 }
