@@ -1,6 +1,6 @@
-package com.tinusj.inligteluim.dto;
+package com.tinusj.inligteluim.domain.dto;
 
-import com.tinusj.inligteluim.entity.Gender;
+import com.tinusj.inligteluim.domain.enums.Gender;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDate;

@@ -1,7 +1,7 @@
 package com.tinusj.inligteluim.service;
 
-import com.tinusj.inligteluim.dto.PersonRequestDto;
-import com.tinusj.inligteluim.dto.PersonResponseDto;
+import com.tinusj.inligteluim.domain.dto.PersonRequestDto;
+import com.tinusj.inligteluim.domain.dto.PersonResponseDto;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package com.tinusj.inligteluim.controller;
 
-import com.tinusj.inligteluim.dto.JwtAuthenticationResponse;
-import com.tinusj.inligteluim.dto.SignInRequest;
-import com.tinusj.inligteluim.dto.SignUpRequest;
+import com.tinusj.inligteluim.domain.dto.JwtAuthenticationResponse;
+import com.tinusj.inligteluim.domain.dto.SignInRequest;
+import com.tinusj.inligteluim.domain.dto.SignUpRequest;
 import com.tinusj.inligteluim.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

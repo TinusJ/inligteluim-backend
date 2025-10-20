@@ -1,6 +1,6 @@
 package com.tinusj.inligteluim.repository;
 
-import com.tinusj.inligteluim.model.User;
+import com.tinusj.inligteluim.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

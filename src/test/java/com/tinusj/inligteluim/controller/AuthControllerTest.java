@@ -1,8 +1,8 @@
 package com.tinusj.inligteluim.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tinusj.inligteluim.dto.SignInRequest;
-import com.tinusj.inligteluim.dto.SignUpRequest;
+import com.tinusj.inligteluim.domain.dto.SignInRequest;
+import com.tinusj.inligteluim.domain.dto.SignUpRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

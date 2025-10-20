@@ -1,8 +1,8 @@
 package com.tinusj.inligteluim.service;
 
-import com.tinusj.inligteluim.dto.PersonRequestDto;
-import com.tinusj.inligteluim.dto.PersonResponseDto;
-import com.tinusj.inligteluim.entity.Person;
+import com.tinusj.inligteluim.domain.dto.PersonRequestDto;
+import com.tinusj.inligteluim.domain.dto.PersonResponseDto;
+import com.tinusj.inligteluim.domain.entity.Person;
 import com.tinusj.inligteluim.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

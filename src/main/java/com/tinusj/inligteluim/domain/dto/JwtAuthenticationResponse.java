@@ -1,4 +1,4 @@
-package com.tinusj.inligteluim.dto;
+package com.tinusj.inligteluim.domain.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
